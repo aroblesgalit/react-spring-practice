@@ -48,33 +48,39 @@ export default function MemoryMatchCards() {
         setCards(shuffledDeck);
     };
 
+    // Handler for flipping a card
     function flipCard(id) {
         const tempDeck = [...cards];
         const tempFlippedCards = [...flippedCards];
         const card = tempDeck.find(card => card.id === id);
         tempFlippedCards.push(card);
-        if (tempFlippedCards.length === 1 && card.flipped === false && !disableClick) {
+        // If only 1 card is flipped
+        if (tempFlippedCards.length === 1 && card.flipped === false && disableClick === false) {
             card.flipped = true;
             setFlippedCards(tempFlippedCards);
             setCards(tempDeck);
-        } else if (tempFlippedCards.length === 2 && card.flipped === false && !disableClick) {
+            // If two cards are flipped
+        } else if (tempFlippedCards.length === 2 && card.flipped === false && disableClick === false) {
+            setDisableClick(true);
             card.flipped = true;
             setCards(tempDeck);
-            setDisableClick(true);
             // Check for match
-            setTimeout(() => {
-                if (tempFlippedCards[0].title === tempFlippedCards[1].title) {
-                    setMatches(matches + 1);
-                    setCards(tempDeck);
-                } else {
+            if (tempFlippedCards[0].title === tempFlippedCards[1].title) {
+                setMatches(matches + 1);
+                setFlippedCards([]);
+                setDisableClick(false);
+            } else {
+                setTimeout(() => {
                     const card1 = tempDeck.find(card => card.id === tempFlippedCards[0].id);
                     card1.flipped = false;
                     card.flipped = false;
                     setCards(tempDeck);
-                }
-                setFlippedCards([]);
-                setDisableClick(false);
-            }, 1000);
+                    setFlippedCards([]);
+                    setTimeout(() => {
+                        setDisableClick(false);
+                    }, 500)
+                }, 1000);
+            }
         }
     };
 
