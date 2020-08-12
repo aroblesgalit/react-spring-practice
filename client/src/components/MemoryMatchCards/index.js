@@ -73,6 +73,16 @@ export default function MemoryMatchCards() {
         }
     };
 
+    function restartGame() {
+        const tempCards = [...cards];
+        tempCards.map(card => card.flipped = false);
+        setMatches(0);
+        setFlippedCards([]);
+        setTimeout(() => {
+            shuffleDeck(tempCards);
+        }, 1000);
+    };
+
     return (
         <>
             <div className='cards'>
@@ -94,7 +104,7 @@ export default function MemoryMatchCards() {
 
             </div>
             {
-                matches === cards.length / 2 ? <button>play again</button> : ''
+                matches === cards.length / 2 ? <button onClick={() => restartGame()}>play again</button> : ''
             }
         </>
     )
