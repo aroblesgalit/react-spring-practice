@@ -15,50 +15,71 @@ export default function MemoryMatchCards() {
         { id: 8, url: 'https://img.memecdn.com/kawaii-pikachu_o_3353575.jpg', title: 'Pikachu', flipped: false }
     ];
 
-    // Separate states
     // Deck state
     const [cards, setCards] = useState([...cardsData]);
     // Number of matches state
     const [matches, setMatches] = useState(0);
     // First flipped card state
-    const [firstCard, setFirstCard] = useState({});
+    const [flippedCards, setFlippedCards] = useState([]);
+    // Disable click state
+    const [disableClick, setDisableClick] = useState(false);
 
     function flipCard(id) {
         const tempDeck = [...cards];
+        const tempFlippedCards = [...flippedCards];
         const card = tempDeck.find(card => card.id === id);
-        if (card.flipped === false) {
+        tempFlippedCards.push(card);
+        if (tempFlippedCards.length === 1 && card.flipped === false && !disableClick) {
             card.flipped = true;
-            setCards([tempDeck]);
-            setFirstCard(card)
+            setFlippedCards(tempFlippedCards);
+            setCards(tempDeck);
+        } else if (tempFlippedCards.length === 2 && card.flipped === false && !disableClick) {
+            card.flipped = true;
+            setCards(tempDeck);
+            setDisableClick(true);
+            // Check for match
+            setTimeout(() => {
+                if (tempFlippedCards[0].title === tempFlippedCards[1].title) {
+                    setMatches(matches + 1);
+                    setCards(tempDeck);
+                } else {
+                    const card1 = tempDeck.find(card => card.id === tempFlippedCards[0].id);
+                    card1.flipped = false;
+                    card.flipped = false;
+                    setCards(tempDeck);
+                }                
+                setFlippedCards([]);
+                setDisableClick(false);
+            }, 1500);
         }
     }
 
-    function checkMatch(id) {
-        if (firstCard.length === 1) {
-            const tempDeck = [...cards];
-            const card1 = tempDeck.find(card => firstCard.id === card.id);
-            const card2 = tempDeck.find(card => id === card.id);
-            if (card1.title === card2.title) {
-                setCards(cards);
-                setFirstCard({});
-                setMatches(matches + 1);
-            } else {
-                card1.flipped = false;
-                card2.flipped = false;
-                setCards(tempDeck);
-                setFirstCard({});
-            }
-        }
-    }
+    // function checkMatch(id) {
+    //     if (firstCard.length === 1) {
+    //         const tempDeck = [...cards];
+    //         const card1 = tempDeck.find(card => firstCard.id === card.id);
+    //         const card2 = tempDeck.find(card => id === card.id);
+    //         if (card1.title === card2.title) {
+    //             setCards(cards);
+    //             setFirstCard({});
+    //             setMatches(matches + 1);
+    //         } else {
+    //             card1.flipped = false;
+    //             card2.flipped = false;
+    //             setCards(tempDeck);
+    //             setFirstCard({});
+    //         }
+    //     }
+    // }
 
-    function handleFlip(id) {
-        if (firstCard.length === 0) {
-            flipCard(id);
-        } else {
-            flipCard(id);
-            checkMatch(id);
-        }
-    };
+    // function handleFlip(id) {
+    //     if (firstCard.length === 0) {
+    //         flipCard(id);
+    //     } else {
+    //         flipCard(id);
+    //         checkMatch(id);
+    //     }
+    // };
 
     return (
         <div className='cards'>
@@ -72,7 +93,7 @@ export default function MemoryMatchCards() {
                             url={url}
                             title={title}
                             flipped={flipped}
-                            handleFlip={handleFlip}
+                            handleFlip={flipCard}
                         />
                     )
                 })
