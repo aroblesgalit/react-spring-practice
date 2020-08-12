@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MemoryMatchCards.scss';
 import MemoryMatchCard from '../MemoryMatchCard';
 
@@ -16,7 +16,7 @@ export default function MemoryMatchCards() {
     ];
 
     // Deck state
-    const [cards, setCards] = useState([...cardsData]);
+    const [cards, setCards] = useState([]);
     // Number of matches state
     const [matches, setMatches] = useState(0);
     // First flipped card state
@@ -24,6 +24,25 @@ export default function MemoryMatchCards() {
     // Disable click state
     const [disableClick, setDisableClick] = useState(false);
 
+    useEffect(() => {
+        shuffleDeck(cardsData);
+    }, []);
+
+    // Shuffle deck
+    // Get length of deck
+    // Create new array
+    // Randomize num and add it to new array and subtract from original array then repeat until original array is empty
+    function shuffleDeck(cards) {
+        let origDeck = [...cards];
+        const shuffledDeck = [];
+        for (let i = cards.length - 1; i >= 0; i--) {
+            let randomIndex = Math.floor(Math.random() * origDeck.length);
+            let card = origDeck.splice(randomIndex, 1);
+            shuffledDeck.push(...card);
+        }
+        setCards(shuffledDeck);
+    };
+   
     function flipCard(id) {
         const tempDeck = [...cards];
         const tempFlippedCards = [...flippedCards];
@@ -47,39 +66,12 @@ export default function MemoryMatchCards() {
                     card1.flipped = false;
                     card.flipped = false;
                     setCards(tempDeck);
-                }                
+                }
                 setFlippedCards([]);
                 setDisableClick(false);
-            }, 1500);
+            }, 1000);
         }
-    }
-
-    // function checkMatch(id) {
-    //     if (firstCard.length === 1) {
-    //         const tempDeck = [...cards];
-    //         const card1 = tempDeck.find(card => firstCard.id === card.id);
-    //         const card2 = tempDeck.find(card => id === card.id);
-    //         if (card1.title === card2.title) {
-    //             setCards(cards);
-    //             setFirstCard({});
-    //             setMatches(matches + 1);
-    //         } else {
-    //             card1.flipped = false;
-    //             card2.flipped = false;
-    //             setCards(tempDeck);
-    //             setFirstCard({});
-    //         }
-    //     }
-    // }
-
-    // function handleFlip(id) {
-    //     if (firstCard.length === 0) {
-    //         flipCard(id);
-    //     } else {
-    //         flipCard(id);
-    //         checkMatch(id);
-    //     }
-    // };
+    };
 
     return (
         <div className='cards'>
