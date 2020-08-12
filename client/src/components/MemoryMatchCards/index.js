@@ -16,7 +16,7 @@ export default function MemoryMatchCards() {
     ];
 
     const [cards, setCards] = useState({
-        deck: cardsData,
+        deck: [...cardsData],
         matched: 0,
         flipped: 0
     });
