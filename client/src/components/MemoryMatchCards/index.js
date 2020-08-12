@@ -42,7 +42,7 @@ export default function MemoryMatchCards() {
         }
         setCards(shuffledDeck);
     };
-   
+
     function flipCard(id) {
         const tempDeck = [...cards];
         const tempFlippedCards = [...flippedCards];
@@ -74,22 +74,26 @@ export default function MemoryMatchCards() {
     };
 
     return (
-        <div className='cards'>
-            {
-                cards.map(card => {
-                    const { id, url, title, flipped } = card;
-                    return (
-                        <MemoryMatchCard
-                            key={id}
-                            id={id}
-                            url={url}
-                            title={title}
-                            flipped={flipped}
-                            handleFlip={flipCard}
-                        />
-                    )
-                })
-            }
-        </div>
+        <>
+            <div className='cards'>
+                {
+                    cards.map(card => {
+                        const { id, url, title, flipped } = card;
+                        return (
+                            <MemoryMatchCard
+                                key={id}
+                                id={id}
+                                url={url}
+                                title={title}
+                                flipped={flipped}
+                                handleFlip={flipCard}
+                            />
+                        )
+                    })
+                }
+
+            </div>
+            <button>play again</button>
+        </>
     )
 }
