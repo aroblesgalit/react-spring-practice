@@ -1,9 +1,12 @@
 import React from 'react';
 import './MemoryMatchCard.scss';
 
-export default function MemoryMatchCard({ id, url, title, flipped, handleFlip }) {
+export default function MemoryMatchCard(props) {
+
+    const { id, url, title, flipped, handleFlip } = props;
+
     return (
-        <div className="card" onClick={() => handleFlip(id)}>
+        <div className='card' onClick={() => handleFlip(id)}>
             <img src={flipped ? url : 'https://www.freeiconspng.com/thumbs/pokeball-png/pokeball-clip-art-png-14.png'} alt={title} />
         </div>
     )

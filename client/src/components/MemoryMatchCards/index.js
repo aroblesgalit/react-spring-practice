@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MemoryMatchCards.scss';
 import MemoryMatchCard from '../MemoryMatchCard';
 
@@ -18,35 +18,71 @@ export default function MemoryMatchCards() {
     const [cards, setCards] = useState({
         deck: [...cardsData],
         matched: 0,
-        flipped: 0
+        flipped: 0,
+        flippedCards: []
     });
 
-    function handleFlip(id) {
-        if (cards.flipped < 2) {
-            console.log(cards.flipped, 'cards.flipped');
-            const tempDeck = [...cards.deck];
-            const card = tempDeck.find(card => card.id = id);
-            card.flipped = true;
+    function flipCard(id) {
+        const tempDeck = [...cards.deck];
+        const card = tempDeck.find(card => card.id === id);
+        // const cardIndex = tempDeck.findIndex(card => card.id === id);
+        // tempDeck[cardIndex].flipped = true;
+        card.flipped = true;
+        console.log(tempDeck);
+        setCards({
+            ...cards,
+            deck: tempDeck,
+            flipped: cards.flipped + 1,
+            flippedCards: [...cards.flippedCards, card]
+        })
+    }
+
+    function checkMatch() {
+        const tempDeck = [...cards.deck];
+        const card1 = tempDeck.find(card => cards.flippedCards[0].id === card.id);
+        const card2 = tempDeck.find(card => cards.flippedCards[1].id === card.id);
+        if (cards.flippedCards[0].title === cards.flippedCards[1].title) {
+            setCards({
+                deck: cards.deck,
+                flipped: 0,
+                flippedCards: [],
+                matched: cards.matched + 1
+            })
+        } else {
+            card1.flipped = false;
+            card2.flipped = false;
             setCards({
                 ...cards,
                 deck: tempDeck,
-                flipped: cards.flipped + 1
+                flipped: 0,
+                flippedCards: []
             })
-        } else if (cards.flipped === 2) {
-            setCards({
-                ...cards,
-                deck: cardsData,
-                flipped: 0
-            })
+        }
+    }
+
+    function handleFlip(id) {
+        if (cards.flippedCards.length < 2) {
+            flipCard(id);
+        } else {
+            checkMatch();
         }
     };
 
     return (
-        <div className="cards">
+        <div className='cards'>
             {
                 cards.deck.map(card => {
                     const { id, url, title, flipped } = card;
-                    return <MemoryMatchCard key={id} id={id} url={url} title={title} flipped={flipped} handleFlip={handleFlip} />
+                    return (
+                        <MemoryMatchCard
+                            key={id}
+                            id={id}
+                            url={url}
+                            title={title}
+                            flipped={flipped}
+                            handleFlip={handleFlip}
+                        />
+                    )
                 })
             }
         </div>
