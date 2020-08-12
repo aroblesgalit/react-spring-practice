@@ -25,16 +25,16 @@ export default function MemoryMatchCards() {
     function flipCard(id) {
         const tempDeck = [...cards.deck];
         const card = tempDeck.find(card => card.id === id);
-        // const cardIndex = tempDeck.findIndex(card => card.id === id);
-        // tempDeck[cardIndex].flipped = true;
-        card.flipped = true;
-        console.log(tempDeck);
-        setCards({
-            ...cards,
-            deck: tempDeck,
-            flipped: cards.flipped + 1,
-            flippedCards: [...cards.flippedCards, card]
-        })
+        if (card.flipped === false) {
+            card.flipped = true;
+            console.log(tempDeck);
+            setCards({
+                ...cards,
+                deck: tempDeck,
+                flipped: cards.flipped + 1,
+                flippedCards: [...cards.flippedCards, card]
+            })
+        }
     }
 
     function checkMatch() {
@@ -61,7 +61,7 @@ export default function MemoryMatchCards() {
     }
 
     function handleFlip(id) {
-        if (cards.flippedCards.length < 2) {
+        if (cards.flipped < 2) {
             flipCard(id);
         } else {
             checkMatch();
