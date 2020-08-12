@@ -93,7 +93,9 @@ export default function MemoryMatchCards() {
                 }
 
             </div>
-            <button>play again</button>
+            {
+                matches === cards.length / 2 ? <button>play again</button> : ''
+            }
         </>
     )
 }
