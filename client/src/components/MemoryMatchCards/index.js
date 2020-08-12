@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './MemoryMatchCards.scss';
 import MemoryMatchCard from '../MemoryMatchCard';
 
@@ -15,19 +15,24 @@ export default function MemoryMatchCards() {
         { id: 8, url: 'https://img.memecdn.com/kawaii-pikachu_o_3353575.jpg', title: 'Pikachu', flipped: false }
     ];
 
+    // Separate states
+    // Deck state
     const [cards, setCards] = useState({
         deck: [...cardsData],
         matched: 0,
         flipped: 0,
         flippedCards: []
     });
+    // Number of matches state
+    const [matches, setMatches] = useState(0);
+    // First flipped card state
+    const [firstCard, setFirstCard] = useState([]);
 
     function flipCard(id) {
         const tempDeck = [...cards.deck];
         const card = tempDeck.find(card => card.id === id);
         if (card.flipped === false) {
             card.flipped = true;
-            console.log(tempDeck);
             setCards({
                 ...cards,
                 deck: tempDeck,
@@ -38,34 +43,35 @@ export default function MemoryMatchCards() {
     }
 
     function checkMatch() {
-        const tempDeck = [...cards.deck];
-        const card1 = tempDeck.find(card => cards.flippedCards[0].id === card.id);
-        const card2 = tempDeck.find(card => cards.flippedCards[1].id === card.id);
-        if (cards.flippedCards[0].title === cards.flippedCards[1].title) {
-            setCards({
-                deck: cards.deck,
-                flipped: 0,
-                flippedCards: [],
-                matched: cards.matched + 1
-            })
-        } else {
-            card1.flipped = false;
-            card2.flipped = false;
-            setCards({
-                ...cards,
-                deck: tempDeck,
-                flipped: 0,
-                flippedCards: []
-            })
+        if (cards.flipped === 2) {
+            const tempDeck = [...cards.deck];
+            const card1 = tempDeck.find(card => cards.flippedCards[0].id === card.id);
+            const card2 = tempDeck.find(card => cards.flippedCards[1].id === card.id);
+            if (cards.flippedCards[0].title === cards.flippedCards[1].title) {
+                setCards({
+                    deck: cards.deck,
+                    flipped: 0,
+                    flippedCards: [],
+                    matched: cards.matched + 1
+                })
+            } else {
+                card1.flipped = false;
+                card2.flipped = false;
+                setCards({
+                    ...cards,
+                    deck: tempDeck,
+                    flipped: 0,
+                    flippedCards: []
+                })
+            }
         }
     }
 
     function handleFlip(id) {
         if (cards.flipped < 2) {
             flipCard(id);
-        } else {
-            checkMatch();
         }
+        checkMatch();
     };
 
     return (
