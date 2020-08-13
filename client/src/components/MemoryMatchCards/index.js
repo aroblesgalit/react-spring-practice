@@ -97,7 +97,7 @@ export default function MemoryMatchCards() {
     };
 
     function restartGame() {
-        const tempCards = [...cards];
+        const tempCards = [...cardsData];
         tempCards.map(card => card.flipped = false);
         setMatches(0);
         setFlippedCards([]);
