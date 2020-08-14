@@ -60,26 +60,22 @@ export default function MemoryMatchCards() {
 
     // Handler for flipping a card
     function flipCard(id) {
-        console.log('card is clicked...');
         const tempDeck = [...cards];
         const tempFlippedCards = [...flippedCards];
         const card = tempDeck.find(card => card.id === id);
         tempFlippedCards.push(card);
         // If only 1 card is flipped
         if (tempFlippedCards.length === 1 && card.flipped === false && disableClick === false) {
-            console.log('conditional...1 card is flipped...');
             card.flipped = true;
             setFlippedCards(tempFlippedCards);
             setCards(tempDeck);
             // If two cards are flipped
         } else if (tempFlippedCards.length === 2 && card.flipped === false && disableClick === false) {
-            console.log('conditional...2 cards are flipped...');
             setDisableClick(true);
             card.flipped = true;
             setCards(tempDeck);
             // Check for match
             if (tempFlippedCards[0].title === tempFlippedCards[1].title) {
-                console.log('cards match...');
                 const card1 = tempDeck.find(card => card.id === tempFlippedCards[0].id);
                 card1.matched = true;
                 card.matched = true;
@@ -88,7 +84,6 @@ export default function MemoryMatchCards() {
                 setFlippedCards([]);
                 setDisableClick(false);
             } else {
-                console.log('cards don\'t match...');
                 setTimeout(() => {
                     const card1 = tempDeck.find(card => card.id === tempFlippedCards[0].id);
                     card1.flipped = false;
