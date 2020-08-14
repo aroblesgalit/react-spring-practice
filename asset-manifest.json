@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/react-spring-practice/static/css/main.797911a5.chunk.css",
+    "main.js": "/react-spring-practice/static/js/main.7c228264.chunk.js",
+    "main.js.map": "/react-spring-practice/static/js/main.7c228264.chunk.js.map",
+    "runtime-main.js": "/react-spring-practice/static/js/runtime-main.d13d7d73.js",
+    "runtime-main.js.map": "/react-spring-practice/static/js/runtime-main.d13d7d73.js.map",
+    "static/js/2.aced696f.chunk.js": "/react-spring-practice/static/js/2.aced696f.chunk.js",
+    "static/js/2.aced696f.chunk.js.map": "/react-spring-practice/static/js/2.aced696f.chunk.js.map",
+    "index.html": "/react-spring-practice/index.html",
+    "precache-manifest.ce29aab2548e198d6a34a16b985dbdf4.js": "/react-spring-practice/precache-manifest.ce29aab2548e198d6a34a16b985dbdf4.js",
+    "service-worker.js": "/react-spring-practice/service-worker.js",
+    "static/css/main.797911a5.chunk.css.map": "/react-spring-practice/static/css/main.797911a5.chunk.css.map",
+    "static/js/2.aced696f.chunk.js.LICENSE.txt": "/react-spring-practice/static/js/2.aced696f.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d13d7d73.js",
+    "static/js/2.aced696f.chunk.js",
+    "static/css/main.797911a5.chunk.css",
+    "static/js/main.7c228264.chunk.js"
+  ]
+}
