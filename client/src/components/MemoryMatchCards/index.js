@@ -55,6 +55,7 @@ export default function MemoryMatchCards() {
             shuffledDeck.push(...card);
         }
         setCards(shuffledDeck);
+        setDisableClick(false);
     };
 
     // Handler for flipping a card
@@ -98,6 +99,7 @@ export default function MemoryMatchCards() {
     };
 
     function restartGame() {
+        setDisableClick(true);
         const tempCards = [...cards];
         setMatches(0);
         setFlippedCards([]);
