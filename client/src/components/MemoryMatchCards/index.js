@@ -38,9 +38,8 @@ export default function MemoryMatchCards() {
 
     // Animation for flipping cards
     const cardAnim = useSpring({
-        to: [{ opacity: 0.5, transform: 'perspective(600px) rotateY(90deg)' }, { opacity: 1, transform: 'perspective(600px) rotateY(180deg)' }],
-        from: { opacity: 1, transform: 'perspective(600px) rotateY(0deg)' },
-        config: { duration: 250 }
+        to: { transform: 'rotateY(180deg)' },
+        from: { transform: 'rotateY(0deg)' }
     });
 
     // Shuffle deck
