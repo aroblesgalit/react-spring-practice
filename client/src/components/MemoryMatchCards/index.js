@@ -29,6 +29,8 @@ export default function MemoryMatchCards() {
     const [flippedCards, setFlippedCards] = useState([]);
     // Disable click state
     const [disableClick, setDisableClick] = useState(false);
+    // Shuffling state
+    const [isShuffling, setIsShuffling] = useState(false);
 
     useEffect(() => {
         shuffleDeck(cardsData);
@@ -38,7 +40,7 @@ export default function MemoryMatchCards() {
     const cardAnim = useSpring({
         to: [{ opacity: 0.5, transform: 'perspective(600px) rotateY(90deg)' }, { opacity: 1, transform: 'perspective(600px) rotateY(180deg)' }],
         from: { opacity: 1, transform: 'perspective(600px) rotateY(0deg)' },
-        config: {duration: 250}
+        config: { duration: 250 }
     });
 
     // Shuffle deck
@@ -102,36 +104,44 @@ export default function MemoryMatchCards() {
     };
 
     function restartGame() {
+        setIsShuffling(true);
         const tempCards = [...cardsData];
         setMatches(0);
         setFlippedCards([]);
+        shuffleDeck(tempCards);
         setTimeout(() => {
-            shuffleDeck(tempCards);
-        }, 1000);
+            setIsShuffling(false);
+        }, 2000);
     };
 
     return (
         <>
-            <div className='cards'>
-                {
-                    cards.map(card => {
-                        const { id, url, title, flipped, matched } = card;
-                        return (
-                            <MemoryMatchCard
-                                key={id}
-                                id={id}
-                                url={url}
-                                title={title}
-                                flipped={flipped}
-                                matched={matched}
-                                handleFlip={flipCard}
-                                cardAnim={cardAnim}
-                            />
-                        )
-                    })
-                }
+            {
+                isShuffling ?
+                    <p className='shuffling-text'>Shuffling deck...</p>
+                    : (
+                        <div className='cards'>
+                            {
+                                cards.map(card => {
+                                    const { id, url, title, flipped, matched } = card;
+                                    return (
+                                        <MemoryMatchCard
+                                            key={id}
+                                            id={id}
+                                            url={url}
+                                            title={title}
+                                            flipped={flipped}
+                                            matched={matched}
+                                            handleFlip={flipCard}
+                                            cardAnim={cardAnim}
+                                        />
+                                    )
+                                })
+                            }
 
-            </div>
+                        </div>
+                    )
+            }
             {
                 matches === cards.length / 2 ? <button onClick={() => restartGame()}>play again</button> : ''
             }

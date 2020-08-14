@@ -26,3 +26,23 @@ button {
         border: none;
     }
 }
+
+.shuffling-text {
+    color: rgb(235, 235, 235);
+    font-size: 2rem;
+    opacity: 1;
+    animation: fade 1s ease-in-out infinite;
+}
+
+@-webkit-keyframes fade {
+    0%, 100% {opacity: 0}
+    50%{opacity: 1}
+}
+@-moz-keyframes fade {
+    0%, 100% {opacity: 0}
+    50%{opacity: 1}
+}
+@keyframes fade {
+    0%, 100% {opacity: 0}
+    50%{opacity: 1}
+}
