@@ -38,7 +38,8 @@ export default function MemoryMatchCards() {
     const cardAnim = useSpring({
         to: { transform: 'rotateY(180deg)' },
         from: { transform: 'rotateY(0deg)' },
-        config: { mass: 5, tension: 500, friction: 80 }
+        config: { mass: 1, tension: 500, friction: 50 },
+        duration: 200
     });
 
     // Shuffle deck
