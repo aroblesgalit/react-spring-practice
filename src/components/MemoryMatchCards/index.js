@@ -108,6 +108,7 @@ export default function MemoryMatchCards() {
         tempCards.map(card => {
             card.flipped = false;
             card.matched = false;
+            return card;
         });
         setTimeout(() => {
             shuffleDeck(tempCards);
