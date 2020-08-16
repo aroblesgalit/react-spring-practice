@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useSpring } from 'react-spring';
 import './MemoryMatchCards.scss';
 import MemoryMatchCard from '../MemoryMatchCard';
+import Sound from 'react-sound';
+import cardFlip from '../../assets/sounds/card-flip.wav';
 
 export default function MemoryMatchCards() {
 
     const cardsData = [
         { id: 1, url: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9a57d7be-b443-4e47-9fed-885821efa9c2/d3cxmmg-ff4ca333-94df-42dc-b1bd-c2c644eada4b.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvOWE1N2Q3YmUtYjQ0My00ZTQ3LTlmZWQtODg1ODIxZWZhOWMyXC9kM2N4bW1nLWZmNGNhMzMzLTk0ZGYtNDJkYy1iMWJkLWMyYzY0NGVhZGE0Yi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.sDPKfpg4_QtpREAZoZVmwldIZ8sGKiSdmWkG46VJi_4', title: 'Bulbasaur', flipped: false, matched: false },
-        { id: 2, url: 'https://cdn140.picsart.com/280351317015211.png?type=webp&to=min&r=240', title: 'Squirtle', flipped: false, matched: false },
+        { id: 2, url: 'https://png.pngitem.com/pimgs/s/513-5136265_chibidex-by-seviyummy-easy-cute-pokmon-drawings-hd.png', title: 'Squirtle', flipped: false, matched: false },
         { id: 3, url: 'https://i.pinimg.com/originals/1c/89/f6/1c89f6668af718874d2cbbe6ff770efd.jpg', title: 'Charmander', flipped: false, matched: false },
         { id: 4, url: 'https://img.memecdn.com/kawaii-pikachu_o_3353575.jpg', title: 'Pikachu', flipped: false, matched: false },
         { id: 5, url: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9a57d7be-b443-4e47-9fed-885821efa9c2/d3cxmmg-ff4ca333-94df-42dc-b1bd-c2c644eada4b.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvOWE1N2Q3YmUtYjQ0My00ZTQ3LTlmZWQtODg1ODIxZWZhOWMyXC9kM2N4bW1nLWZmNGNhMzMzLTk0ZGYtNDJkYy1iMWJkLWMyYzY0NGVhZGE0Yi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.sDPKfpg4_QtpREAZoZVmwldIZ8sGKiSdmWkG46VJi_4', title: 'Bulbasaur', flipped: false, matched: false },
-        { id: 6, url: 'https://cdn140.picsart.com/280351317015211.png?type=webp&to=min&r=240', title: 'Squirtle', flipped: false, matched: false },
+        { id: 6, url: 'https://png.pngitem.com/pimgs/s/513-5136265_chibidex-by-seviyummy-easy-cute-pokmon-drawings-hd.png', title: 'Squirtle', flipped: false, matched: false },
         { id: 7, url: 'https://i.pinimg.com/originals/1c/89/f6/1c89f6668af718874d2cbbe6ff770efd.jpg', title: 'Charmander', flipped: false, matched: false },
         { id: 8, url: 'https://img.memecdn.com/kawaii-pikachu_o_3353575.jpg', title: 'Pikachu', flipped: false, matched: false },
         { id: 9, url: 'https://i.pinimg.com/originals/98/2a/b6/982ab66f09a7cc30332ebd73cb4ab4fc.png', title: 'Meowth', flipped: false, matched: false },
@@ -114,6 +116,10 @@ export default function MemoryMatchCards() {
 
     return (
         <>
+            <Sound
+                url={cardFlip}
+                playStatus={Sound.status.PLAYING}
+            />
             <div className='cards'>
                 {
                     cards.map(card => {
